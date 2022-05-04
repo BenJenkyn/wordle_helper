@@ -1,13 +1,100 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
+import { useFormik } from 'formik';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { getWordList } from './lib/getWordList';
+import LetterInput from './components/LetterInput';
 
-  return (
-    <div className="App">
-      
-    </div>
-  )
+export enum GuessType {
+	grey = 'grey',
+	yellow = 'yellow',
+	green = 'green',
 }
 
-export default App
+const initialValues = {
+	word: [
+		{
+			letter: '',
+			guessType: GuessType.grey,
+		},
+		{
+			letter: '',
+			guessType: GuessType.grey,
+		},
+		{
+			letter: '',
+			guessType: GuessType.grey,
+		},
+		{
+			letter: '',
+			guessType: GuessType.grey,
+		},
+		{
+			letter: '',
+			guessType: GuessType.grey,
+		},
+	],
+};
+
+function App() {
+	const [wordList, setWordList] = useState<string[]>();
+	const input_letters = useRef<HTMLInputElement[]>([]);
+
+	useEffect(() => {
+		getWordList().then((res) => {
+			setWordList(res);
+		});
+	}, []);
+
+	const formik = useFormik({
+		initialValues,
+		onSubmit: (values) => {
+			console.log(values);
+			console.log(formik.values);
+		},
+	});
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { maxLength, value, id } = e.target;
+		if (value.length >= maxLength) {
+			input_letters.current[
+				Number(id) + (Number(id) + 1 < initialValues.word.length ? 1 : 0)
+			].focus();
+		}
+		formik.handleChange(e);
+	};
+
+	const jsxWords = wordList?.map((word) => {
+		return <p>{word}</p>;
+	});
+
+	/* Return a LetterInput for every letter in the word */
+	const LetterInputs = initialValues.word.map((letter, index) => {
+		return (
+			<LetterInput
+				letterNum={index}
+				onTextChange={onChange}
+				onColorChange={formik.handleChange}
+				textValue={formik.values.word[index].letter}
+				radioValue={formik.values.word[index].guessType}
+				letterRef={(el: HTMLInputElement) => {
+					if (input_letters.current) {
+						input_letters.current[index] = el;
+					}
+				}}
+			/>
+		);
+	});
+
+	return (
+		<div className="App">
+			<form onSubmit={formik.handleSubmit}>
+				<h1>Input first wordle guess: </h1>
+				{LetterInputs}
+				<button type="submit">Submit Letters</button>
+			</form>
+			{jsxWords}
+		</div>
+	);
+}
+
+export default App;
