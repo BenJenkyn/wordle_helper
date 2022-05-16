@@ -31,7 +31,7 @@ const LetterInput = ({
 				required
 			/>
 			<div role="group">
-				<label>Grey: </label>
+				<label>Grey:</label>
 				<input
 					type="radio"
 					aria-label={`wordle-guess-wrong-${letterNum + 1}-radio`}
@@ -39,7 +39,7 @@ const LetterInput = ({
 					value={GuessType.grey}
 					onChange={onColorChange}
 				/>
-				<label>Yellow: </label>
+				<label>Yellow:</label>
 				<input
 					type="radio"
 					aria-label={`wordle-guess-right-letter-${letterNum + 1}-radio`}
@@ -47,7 +47,7 @@ const LetterInput = ({
 					value={GuessType.yellow}
 					onChange={onColorChange}
 				/>
-				<label>Green: </label>
+				<label>Green:</label>
 				<input
 					type="radio"
 					aria-label={`wordle-guess-right-spot-${letterNum + 1}-radio`}

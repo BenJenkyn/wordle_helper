@@ -36,7 +36,7 @@ const initialValues = {
 };
 
 function App() {
-	const [wordList, setWordList] = useState<string[]>();
+	const [wordList, setWordList] = useState<string[]>([]);
 	const input_letters = useRef<HTMLInputElement[]>([]);
 
 	useEffect(() => {
@@ -48,8 +48,40 @@ function App() {
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => {
-			console.log(values);
-			console.log(formik.values);
+			let tempWordList = wordList;
+			values.word.forEach((letter, idx) => {
+				switch (letter.guessType) {
+					case GuessType.grey: {
+						tempWordList = tempWordList.filter((word) => {
+							if (word.includes(letter.letter)) {
+								console.log(letter.letter);
+								return false;
+							}
+							return true;
+						});
+						setWordList(tempWordList);
+						break;
+					}
+					case GuessType.green: {
+						tempWordList = tempWordList.filter((word) => {
+							if(letter.letter === word[idx]){
+								return true;
+							}
+							return false;
+						})
+						break;
+					}
+					case GuessType.yellow: {
+						tempWordList = tempWordList.filter((word) => {
+							if(word.includes(letter.letter) && letter.letter !== word[idx]){
+								return true;
+							}
+							return false;
+						})
+					}
+				}
+			});
+			setWordList(tempWordList);
 		},
 	});
 
@@ -63,7 +95,7 @@ function App() {
 		formik.handleChange(e);
 	};
 
-	const jsxWords = wordList?.map((word) => {
+	const jsxWords = wordList.map((word) => {
 		return <p>{word}</p>;
 	});
 
