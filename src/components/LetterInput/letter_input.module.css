@@ -1,0 +1,82 @@
+.input_box {
+	height: 62px;
+	width: 62px;
+	font-size: 2rem;
+	text-align: center;
+	font-weight: bold;
+	background-color: black;
+	color: white;
+	border-width: 0px;
+    margin-bottom: 1rem;
+}
+
+.input_box_grey {
+	background-color: var(--dark-grey);
+}
+
+.input_box_yellow {
+	background-color: var(--dark-yellow);
+}
+
+.input_box_green {
+	background-color: var(--dark-green);
+}
+
+.letter_area {
+	display: flex;
+	flex-direction: column;
+}
+
+.radios {
+	display: flex;
+	flex-direction: column;
+    border-width: 1px;
+}
+
+.container {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+    margin-top: 0.1rem;
+	cursor: pointer;
+	font-size: 22px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.container input {
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.checkmark_grey {
+	background-color: var(--dark-grey);
+}
+.checkmark_yellow {
+	background-color: var(--dark-yellow);
+}
+.checkmark_green {
+	background-color: var(--dark-green);
+}
+
+.container:hover input ~ .checkmark_grey {
+	background-color: #565758;
+}
+.container:hover input ~ .checkmark_yellow {
+	background-color: #c9b458;
+}
+.container:hover input ~ .checkmark_green {
+	background-color: #6aaa64;
+}

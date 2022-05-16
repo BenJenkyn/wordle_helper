@@ -1,0 +1,9 @@
+*{
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+:root{
+    --dark-grey: #3a3a3c;
+    --dark-yellow: #b59f3b;
+    --dark-green: #538d4e;
+}
