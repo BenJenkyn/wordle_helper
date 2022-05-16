@@ -64,20 +64,20 @@ function App() {
 					}
 					case GuessType.green: {
 						tempWordList = tempWordList.filter((word) => {
-							if(letter.letter === word[idx]){
+							if (letter.letter === word[idx]) {
 								return true;
 							}
 							return false;
-						})
+						});
 						break;
 					}
 					case GuessType.yellow: {
 						tempWordList = tempWordList.filter((word) => {
-							if(word.includes(letter.letter) && letter.letter !== word[idx]){
+							if (word.includes(letter.letter) && letter.letter !== word[idx]) {
 								return true;
 							}
 							return false;
-						})
+						});
 					}
 				}
 			});
@@ -119,8 +119,8 @@ function App() {
 
 	return (
 		<div className="App">
+			<h1>Input first wordle guess: </h1>
 			<form onSubmit={formik.handleSubmit}>
-				<h1>Input first wordle guess: </h1>
 				{LetterInputs}
 				<button type="submit">Submit Letters</button>
 			</form>
