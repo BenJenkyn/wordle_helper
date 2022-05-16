@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 
+import styles from './app.module.css';
 import { getWordList } from './lib/getWordList';
 import LetterInput from './components/LetterInput';
 
@@ -41,6 +42,7 @@ function App() {
 
 	useEffect(() => {
 		getWordList().then((res) => {
+			// res.forEach((currentRes) => (currentRes = currentRes.toUpperCase()));
 			setWordList(res);
 		});
 	}, []);
@@ -95,6 +97,11 @@ function App() {
 				Number(id) + (Number(id) + 1 < initialValues.word.length ? 1 : 0)
 			].focus();
 		}
+		if (value.length <= 0) {
+			input_letters.current[
+				Number(id) - (Number(id) - 1 < 0 ? 0 : 1)
+			].focus();
+		}
 		formik.handleChange(e);
 	};
 
@@ -109,7 +116,7 @@ function App() {
 				letterNum={index}
 				onTextChange={onChange}
 				onColorChange={formik.handleChange}
-				textValue={formik.values.word[index].letter}
+				textValue={formik.values.word[index].letter.toUpperCase()}
 				radioValue={formik.values.word[index].guessType}
 				letterRef={(el: HTMLInputElement) => {
 					if (input_letters.current) {
@@ -122,12 +129,14 @@ function App() {
 
 	return (
 		<div className="App">
-			<h1>Input first wordle guess: </h1>
-			<form onSubmit={formik.handleSubmit}>
+			<h1>Input wordle guess: </h1>
+			<form onSubmit={formik.handleSubmit} className={styles.inputs}>
 				{LetterInputs}
 				<button type="submit">Submit Letters</button>
 			</form>
-			{jsxWords}
+			<section aria-label='remaining-words'>
+				{jsxWords}
+			</section>
 		</div>
 	);
 }
