@@ -80,6 +80,9 @@ function App() {
 						});
 					}
 				}
+				// Resets the form
+				letter.letter = '';
+				letter.guessType = GuessType.grey;
 			});
 			setWordList(tempWordList);
 		},
